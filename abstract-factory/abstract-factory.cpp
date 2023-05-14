@@ -1,13 +1,12 @@
 /*
- * This code demonstrates how to use the Abstract Factory pattern in C++ to create a GUI factory that can create
- * buttons and checkboxes for different platforms (Windows and Mac).
+ * This code demonstrates how to use the Abstract Factory pattern in C++ to create a GUI factory that
+ * can create buttons and checkboxes depending on the platform, namely Windows and Mac.
  *
  * The Abstract Factory pattern provides an interface for creating families of related objects without specifying
  * their concrete classes.
  */
 
 #include <iostream>
-using namespace std;
 
 class Button {
 public:
@@ -17,14 +16,14 @@ public:
 class WinButton : public Button {
 public:
     void paint() {
-        cout << "Windows Button" << endl;
+        std::cout << "Windows Button" << std::endl;
     }
 };
 
 class MacButton : public Button {
 public:
     void paint() {
-        cout << "Mac Button" << endl;
+        std::cout << "Mac Button" << std::endl;
     }
 };
 
@@ -36,14 +35,14 @@ public:
 class WinCheckBox : public CheckBox {
 public:
     void paint() {
-        cout << "Windows CheckBox" << endl;
+        std::cout << "Windows CheckBox" << std::endl;
     }
 };
 
 class MacCheckBox : public CheckBox {
 public:
     void paint() {
-        cout << "Mac CheckBox" << endl;
+        std::cout << "Mac CheckBox" << std::endl;
     }
 };
 
@@ -77,21 +76,18 @@ public:
 
 int main()
 {
- // Create an instance of the factory based on the platform
 #ifdef WIN32
     GUIFactory* factory = new WinFactory();
 #else
     GUIFactory* factory = new MacFactory();
 #endif
 
-    // Use the factory to create a button and a checkbox
     Button* button = factory->createButton();
     button->paint();
 
     CheckBox* checkbox = factory->createCheckBox();
     checkbox->paint();
 
-    // Clean up
     delete button;
     delete checkbox;
 }
