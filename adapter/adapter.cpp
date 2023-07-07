@@ -1,3 +1,11 @@
+/*
+ * This example code shows how the Adapter pattern can be implemented in C++.
+ *
+ * In this example, we have an ITarget interface that defines the expected interface for our code. 
+ * We also have an Adaptee class that has a different interface than what our code expects. 
+ * Finally, we have an Adapter class that implements the ITarget interface and uses the Adaptee class internally.
+ */
+
 #include <iostream>
 #include <string>
 
