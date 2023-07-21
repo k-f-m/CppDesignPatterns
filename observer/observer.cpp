@@ -5,10 +5,12 @@
 * mechanism to notify multiple objects about any events that happen to the object they’re observing. 
 * Observer defines a one-to-many dependency between objects so that when one object changes state, 
 * all its dependents are notified and updated automatically.
+*
 */
 
 #include <iostream>
 #include <vector>
+#include <algorithm> // Needed for std::remove
 
 class IObserver {
 public:
@@ -26,16 +28,18 @@ public:
 
 class ConcreteObserver : public IObserver {
 public:
-    ConcreteObserver(const std::string& name) : name_(name) {}
-    void update() override { std::cout << "Observer " << name_ << " is notified." << std::endl; }
+    ConcreteObserver(const std::string& name) : observer_name(name) {}
+    void update() override { std::cout << "Observer " << observer_name << " is notified." << std::endl; }
 private:
-    std::string name_;
+    std::string observer_name;
 };
 
 class ConcreteSubject : public ISubject {
 public:
     void attach(IObserver* observer) override { observer_list.push_back(observer); }
-    void detach(IObserver* observer) override { observer_list.erase(std::remove(observer_list.begin(), observer_list.end(), observer), observer_list.end()); }
+    void detach(IObserver* observer) override {
+        observer_list.erase(std::remove(observer_list.begin(), observer_list.end(), observer), observer_list.end());
+    }
     void notify() override {
         for (auto& observer : observer_list) {
             observer->update();
@@ -51,5 +55,9 @@ int main() {
     ConcreteObserver observer2("2");
     subject.attach(&observer1);
     subject.attach(&observer2);
+    subject.notify();
+
+    // Detach observer1 and notify again to see it's no longer notified
+    subject.detach(&observer1);
     subject.notify();
 }
